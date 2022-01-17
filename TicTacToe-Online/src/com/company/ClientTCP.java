@@ -10,6 +10,7 @@ public class ClientTCP implements Runnable {
     private static BufferedReader fromServer;
     private static Socket socket;
     private static boolean endConnect;
+    private static String serverMsg;
 
     public void run() {
         try {
@@ -27,26 +28,31 @@ public class ClientTCP implements Runnable {
             //BufferedReader
             fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+            toServer.println("Ready");
 
-//
-//            toServer.println(144666);
-//
-           outloop:
+
+
            do{
-//               if(endConnect){
-//                   break outloop;
-//               }
-               if(fromServer.ready()){
-                String line = fromServer.readLine();
-                System.out.println(line );}
 
-               System.out.println(endConnect);
+               if(fromServer.ready()){
+
+                String line = fromServer.readLine();
+                if(line.length() == 1){
+                    GameBufor.setPlayerMark(line);
+                }
+
+                System.out.println(line );}
 
             }while(!endConnect);
             System.out.println("zamykam połączenie");
+
             toServer.close();
 
+            fromServer.close();
+
             socket.close();
+
+
         }
 
         catch(UnknownHostException ex) {
@@ -57,10 +63,12 @@ public class ClientTCP implements Runnable {
         }
     }
     public static void playerMove(String move) throws IOException {
-        System.out.println("Field info: " + move);
         toServer.println(move);
     }
 
+    public static String getServerMsg() {
+        return serverMsg;
+    }
 
     public static boolean isEndConnect() {
         return endConnect;

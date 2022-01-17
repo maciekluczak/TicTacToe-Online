@@ -81,7 +81,8 @@ public class GameField extends JLabel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
     //Field respond to mouse click. Mark under field has changed (turn-dependent char)
 
-        if(gameBufor.getTurn()%2 == 0){
+        if(gameBufor.getTurn()%2 == 0 && gameBufor.getPlayerMark().equals("o")){
+
             setFieldMark("o");
             try {
                 gameBufor.playerMove(fieldMark+fieldID);
@@ -90,7 +91,7 @@ public class GameField extends JLabel implements MouseListener {
             }
 
 
-        } else if(gameBufor.getTurn()%2 == 1){
+        } else if(gameBufor.getTurn()%2 == 1&& gameBufor.getPlayerMark().equals("x")){
             setFieldMark("x");
 
             try {

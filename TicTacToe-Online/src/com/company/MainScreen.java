@@ -30,6 +30,7 @@ public class MainScreen extends JFrame implements MouseListener, WindowListener 
         windowIcon = new ImageIcon("image\\oX.jpg");
         this.setIconImage(windowIcon.getImage());
 
+
         //New CardLayout
         cl = new CardLayout();
         contentPanel = new JPanel();
@@ -144,13 +145,16 @@ public class MainScreen extends JFrame implements MouseListener, WindowListener 
 
     @Override
     public void windowClosing(WindowEvent e) {
-
-        waitPage.getWaitLabel().setShouldWait(false);
-        try {
-            gameBufor.endConnectServer();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+        if (gameBufor != null){
+            waitPage.getWaitLabel().setShouldWait(false);
+            try {
+                gameBufor.endConnectServer();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 
     }
 

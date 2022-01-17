@@ -98,6 +98,7 @@ public class GameBoard extends JPanel implements Runnable{
                 e.printStackTrace();
             }
 
+
             for (int row = 0; row < boardSize; row++) {
                 for (int col = 0; col < boardSize; col++) {
                 //For each win combination, check the mark (x,o,-) from under a single field on grid
