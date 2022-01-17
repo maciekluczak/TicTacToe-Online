@@ -2,9 +2,13 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
 
-public class WaitLabel extends JLabel implements Runnable{
+public class WaitLabel extends JLabel implements Runnable {
     private GameBufor gameBufor = new GameBufor();
+
+
+
     private final ImageIcon waitImage0, waitImage1, waitImage2,  waitImage3;
     private boolean shouldWait;
 
@@ -28,7 +32,9 @@ public class WaitLabel extends JLabel implements Runnable{
     public void setShouldWait(boolean shouldWait) {
         this.shouldWait = shouldWait;
     }
-
+    public boolean isShouldWait() {
+        return shouldWait;
+    }
     @Override
     public void run() {
         shouldWait = true;
@@ -67,10 +73,10 @@ public class WaitLabel extends JLabel implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("wait");
+
 
         }while(shouldWait == true);
-        System.out.println("wait ends...");
+
 
 
 

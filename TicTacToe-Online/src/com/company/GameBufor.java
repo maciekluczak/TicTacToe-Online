@@ -7,10 +7,13 @@ public class GameBufor {
     private static int isGameRun;
     private static String playerMark; // "-", "x", "o"
     private static ClientTCP clientTCP;
+    private static String enemyMove;
+
     public GameBufor() {
 
     }
     public void connectServer(){
+        enemyMove = "-";
         playerMark = "-";
         clientTCP = new ClientTCP();
         clientTCP.setEndConnect(false);
@@ -34,6 +37,14 @@ public class GameBufor {
 
     public static String getPlayerMark() {
         return playerMark;
+    }
+
+    public static String getEnemyMove() {
+        return enemyMove;
+    }
+
+    public static void setEnemyMove(String enemyMove) {
+        GameBufor.enemyMove = enemyMove;
     }
 
     public static int getTurn() {

@@ -85,7 +85,7 @@ public class GameField extends JLabel implements MouseListener {
 
             setFieldMark("o");
             try {
-                gameBufor.playerMove(fieldMark+fieldID);
+                gameBufor.playerMove(Integer.toString(fieldID));
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -95,7 +95,7 @@ public class GameField extends JLabel implements MouseListener {
             setFieldMark("x");
 
             try {
-                gameBufor.playerMove(fieldMark+fieldID);
+                gameBufor.playerMove(Integer.toString(fieldID));
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }

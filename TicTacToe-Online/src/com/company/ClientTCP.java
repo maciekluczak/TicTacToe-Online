@@ -39,6 +39,10 @@ public class ClientTCP implements Runnable {
                 String line = fromServer.readLine();
                 if(line.length() == 1){
                     GameBufor.setPlayerMark(line);
+                    MainScreen.letsPlay();
+
+                }else if(line.length()==2){
+                    GameBufor.setEnemyMove(line);
                 }
 
                 System.out.println(line );}

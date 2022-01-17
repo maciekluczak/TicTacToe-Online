@@ -90,6 +90,7 @@ public class GameBoard extends JPanel implements Runnable{
 
         int matchBound= (boardSize*boardSize);      //Total maximum number of moves in the game (both players)
         int oneMoreLoop=1;                          //Integer for last check of the state of the game to detect a draw
+        int enemyMove = 0;
 
         while (!gameEnd) {
             try {
@@ -97,6 +98,39 @@ public class GameBoard extends JPanel implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            if(gameBufor.getPlayerMark().equals("o") & gameBufor.getTurn()%2 == 1) {
+
+                enemyMove = Integer.valueOf(gameBufor.getPlayerMark());
+
+                for (int row = 0; row < 3; row++) {
+                    for (int col = 0; col < 3; col++) {
+                        if (boardField[row][col].getFieldID() == enemyMove) {
+                            boardField[row][col].setFieldMark("x");
+                        }
+                    }
+                }
+
+            }
+
+
+
+
+
+            else if(gameBufor.getPlayerMark().equals("x") & gameBufor.getTurn()%2 == 0){
+                for (int row = 0; row < 3; row++) {
+                    for (int col = 0; col < 3; col++) {
+                        if (boardField[row][col].getFieldID() == enemyMove) {
+                            boardField[row][col].setFieldMark("x");
+                        }
+                    }
+                }
+
+
+
+            }
+
+
 
 
             for (int row = 0; row < boardSize; row++) {
