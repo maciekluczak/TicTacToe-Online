@@ -24,8 +24,8 @@ Interface gry (GUI), klient TCP oraz mechanizm rozpoznawania stanów gry, zosta�
     ## Klient:
     Po wprowadzeniu w interfejsie gry informacji o adresie serwera, wpisany adres jest poddany weryfikacji oraz sprawdzeniu czy istnieje z nim połączenie, kiedy system uzna połączenie za bezpieczne  następuje powiązanie sygnału z serwerem oraz wysłanie wiadomości przez klienta o gotowości do gry oczekując na przeciwnika. 
 
-3. Opis wybranej zawartości projektu.
-• `ServerTCP.cpp` - implementacja serwera w języku c++
+3. Opis wybranej zawartości projektu.\n
+• `ServerTCP.cpp` - implementacja serwera w języku c++\n
 Zawartość folderu TicTacToe-Online:
 • image - folder zawierający graficzne uzupełnienie interejsu gry
 • `ClientTCP.java` - Klasa implementująca model klienta
