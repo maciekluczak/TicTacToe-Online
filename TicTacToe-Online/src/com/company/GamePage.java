@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class GamePage extends JLayeredPane implements Runnable {
+public class GamePage extends JLayeredPane implements Runnable { //Runnable class, Page with interactive Game Board
     private GameBufor gameBufor;
     private GameBoard game2D;
     private ExitButton exitButton;
@@ -15,7 +15,7 @@ public class GamePage extends JLayeredPane implements Runnable {
         return exitButton;
     }
 
-    public GamePage() {
+    public GamePage() {                 //Page initialization
         gameBufor = new GameBufor();
          panelUp = new JPanel();
          panelRight = new JPanel();
@@ -65,8 +65,8 @@ public class GamePage extends JLayeredPane implements Runnable {
         this.setVisible(true);
 
     }
-    public void ExitGame() throws IOException {
-        gameBufor.endConnectServer();
+    public void ExitGame() throws IOException {// action after clicking ExitButton - Destructor
+
         gameBufor.setTurn(0);
         panelCenter.remove(game2D);
         panelCenter.remove(exitButton);
@@ -75,24 +75,25 @@ public class GamePage extends JLayeredPane implements Runnable {
     }
 
     @Override
-    public void run() {gameBufor.setIsGameRun(1);
+    public void run() {gameBufor.setIsGameRun(1); //Runnable Main Game Class
 
-        turnLabel = new TurnLabel(150,150);
+        turnLabel = new TurnLabel(150,150); //Turn info Thread
         Thread turnThread= new Thread(turnLabel);
         panelRight.add(turnLabel);
-        game2D = new GameBoard();
+        game2D = new GameBoard();                                       //Game Board 3x3
         panelCenter.add(game2D, BorderLayout.CENTER);
         SwingUtilities.updateComponentTreeUI(this);
         game2D.setVisible(true);
         Thread gameThread = new Thread(game2D);
-        gameThread.start();
+        gameThread.start();                                             //Game Board Thread
         turnThread.start();
         try {
-            gameThread.join();
+            gameThread.join();                          //Wait for end of game
 
             gameBufor.setIsGameRun(0);
             panelRight.remove(turnLabel);
             panelCenter.add(exitButton, BorderLayout.SOUTH);
+
 
 
             panelCenter.add(Box.createHorizontalStrut(150));

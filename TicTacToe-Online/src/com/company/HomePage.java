@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class HomePage extends JLayeredPane {
-    private MenuButton matchButton, searchButton;
+    private MenuButton playButton;
 
     public HomePage() {
 
@@ -59,12 +59,13 @@ public class HomePage extends JLayeredPane {
         panelCenter.add(titleLabel2, BorderLayout.SOUTH);
 
         //Creating Match Buttons
-        panelUp.setLayout(new GridLayout(1,2,20,70));
+        panelUp.setLayout(new GridLayout(1,3,20,70));
 
-        matchButton = new MenuButton("New Match", 400, 420);
-        panelUp.add(matchButton);
-        searchButton = new MenuButton("Search Match", 400, 420);
-        panelUp.add(searchButton);
+        panelUp.add(new JLabel());
+        playButton = new MenuButton("Let's Play!", 400, 350);
+        panelUp.add(playButton);
+        panelUp.add(new JLabel());
+
 
         //Implementation in the frame
         panelBackground.add(panelUp, BorderLayout.NORTH);
@@ -85,11 +86,8 @@ public class HomePage extends JLayeredPane {
 
     }
 
-    public MenuButton getMatchButton() {
-        return matchButton;
+    public MenuButton getPlayButton() {
+        return playButton;
     }
 
-    public MenuButton getSearchButton() {
-        return searchButton;
-    }
 }

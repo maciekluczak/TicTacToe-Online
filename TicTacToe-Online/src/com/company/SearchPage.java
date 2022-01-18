@@ -8,9 +8,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class SearchPage extends JLayeredPane implements KeyListener, FocusListener {
-    private JTextField registerTextField;
+    private JTextField ipTextField;
     private BackButton backButton;
     private String proptText;
+    private MenuButton connectButton;
+
 
     public SearchPage() {
         proptText = "Enter Server IP";
@@ -66,9 +68,9 @@ public class SearchPage extends JLayeredPane implements KeyListener, FocusListen
         panelCenter.add(panelCenterBottom);
 
         //Creating Logo Label
-        registerTextField = new JTextField(proptText, 20);
-        registerTextField.setForeground(Color.lightGray);
-        registerTextField.setBounds(0, 75, 320, 111);
+        ipTextField = new JTextField(proptText, 20);
+        ipTextField.setForeground(Color.lightGray);
+        ipTextField.setBounds(0, 75, 320, 111);
 
         ImageIcon image = new ImageIcon("image\\textfield1.png");
         Image convertImage = image.getImage();
@@ -78,16 +80,22 @@ public class SearchPage extends JLayeredPane implements KeyListener, FocusListen
         JLabel labelTextField = new JLabel();
         labelTextField.setIcon(imageTextField);
 
-        registerTextField.setOpaque(false);
+        ipTextField.setOpaque(false);
         labelTextField.setOpaque(false);
-        registerTextField.setFont(new Font("MV Boli", Font.PLAIN, 30));
+        ipTextField.setFont(new Font("MV Boli", Font.PLAIN, 30));
 
-        labelTextField.add(registerTextField);
+        labelTextField.add(ipTextField);
         panelCenterTop.add(labelTextField);
 
         //Creating Match Buttons
-        registerTextField.addKeyListener(this);
-        registerTextField.addFocusListener(this);
+        ipTextField.addKeyListener(this);
+        ipTextField.addFocusListener(this);
+
+        connectButton = new MenuButton("Connect", 150,130);
+        connectButton.setFont(new Font("MV Boli", Font.PLAIN, 12));
+        panelCenterBottom.add(connectButton);
+
+
 
 
         backButton=new BackButton(100, 50);
@@ -116,6 +124,14 @@ public class SearchPage extends JLayeredPane implements KeyListener, FocusListen
 
     }
 
+    public String getIpTextField() {
+        return ipTextField.getText();
+    }
+
+    public MenuButton getConnectButton() {
+        return connectButton;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -128,13 +144,12 @@ public class SearchPage extends JLayeredPane implements KeyListener, FocusListen
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (registerTextField.isFocusOwner()) {
+        if (ipTextField.isFocusOwner()) {
 
             if (e.getKeyCode() >= 48 & e.getKeyCode() <= 57 ||
-                    //e.getKeyCode() >= 65 & e.getKeyCode() <= 90 ||
-                    e.getKeyCode() == 46 || e.getKeyCode() == 8) {
+                    e.getKeyCode() == 46 || e.getKeyCode() == 8 || e.getKeyCode() == 13 ) {
             } else {
-                registerTextField.setText("");
+                ipTextField.setText("");
                 JOptionPane.showMessageDialog(null, "Enter only IP of The Host Server!", "Username", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -143,20 +158,20 @@ public class SearchPage extends JLayeredPane implements KeyListener, FocusListen
 
     @Override
     public void focusGained(FocusEvent e) {
-        if(e.getSource() == registerTextField){
-            if(registerTextField.getText().equals(proptText)) {
-                registerTextField.setForeground(Color.BLACK);
-                registerTextField.setText("");}
+        if(e.getSource() == ipTextField){
+            if(ipTextField.getText().equals(proptText)) {
+                ipTextField.setForeground(Color.BLACK);
+                ipTextField.setText("");}
         }
 
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        if(e.getSource() == registerTextField){
-            if(registerTextField.getText().equals("")) {
-                registerTextField.setForeground(Color.LIGHT_GRAY);
-                registerTextField.setText(proptText);}
+        if(e.getSource() == ipTextField){
+            if(ipTextField.getText().equals("")) {
+                ipTextField.setForeground(Color.LIGHT_GRAY);
+                ipTextField.setText(proptText);}
         }
     }
 

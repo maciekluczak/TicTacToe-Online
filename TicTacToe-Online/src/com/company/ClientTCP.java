@@ -12,49 +12,58 @@ public class ClientTCP implements Runnable {
     private static boolean endConnect;
     private static String serverMsg;
 
-    public void run() {
+    public void run() { //Runnable Interface
         try {
-            serverPort= 1234;
-            //InetAddress
-            host = InetAddress.getByName("192.168.1.103");
-            System.out.println("Connecting to server on port " + serverPort);
 
-            //Socket
-            socket = new Socket(host,serverPort);
-            System.out.println("Just connected to " + socket.getRemoteSocketAddress());
+            if (isIpReachable(GameBufor.getServerIp(), 2)) {    //Check if "is connection with server"
+                System.out.println(isIpReachable(GameBufor.getServerIp(), 2));
 
-            //PrintWriter
-            toServer = new PrintWriter(socket.getOutputStream(),true);
-            //BufferedReader
-            fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                serverPort = 1234;
+                //InetAddress
+                host = InetAddress.getByName(GameBufor.getServerIp());          //get sever IP
+                System.out.println("Connecting to server on port " + serverPort);
 
-            toServer.println("Ready");
+                //Socket
+
+                socket = new Socket(host, serverPort);                          //new Socket
+                System.out.println("Just connected to " + socket.getRemoteSocketAddress());
+
+                //PrintWriter
+                toServer = new PrintWriter(socket.getOutputStream(), true);
+                //BufferedReader
+                fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                toServer.println("Ready");
 
 
+                do {                                                //main Client loop, connected with, GameBufor, GameField class
 
-           do{
+                    if (fromServer.ready()) {
 
-               if(fromServer.ready()){
+                        String line = fromServer.readLine();
+                        if (line.length() == 1 & !line.equals("/n")) {          // First Line to get player Mark from Server
+                            GameBufor.setPlayerMark(line);
+                            MainScreen.letsPlay();
 
-                String line = fromServer.readLine();
-                if(line.length() == 1){
-                    GameBufor.setPlayerMark(line);
-                    MainScreen.letsPlay();
+                        } else if (line.length() > 1) {                         //Gameplay, server sending opponent moves
 
-                }else if(line.length()==2){
-                    GameBufor.setEnemyMove(line);
-                }
+                            GameBufor.setEnemyMove(String.valueOf(line.charAt(line.length() - 1)));
 
-                System.out.println(line );}
 
-            }while(!endConnect);
-            System.out.println("zamykam połączenie");
+                        }
 
-            toServer.close();
+                        System.out.println(line);
+                    }
 
-            fromServer.close();
+                } while (!endConnect);                  //end game when endConnect = true, set from GameBuffor
 
-            socket.close();
+                toServer.close();
+
+                fromServer.close();
+
+                socket.close();
+
+            }
 
 
         }
@@ -68,6 +77,17 @@ public class ClientTCP implements Runnable {
     }
     public static void playerMove(String move) throws IOException {
         toServer.println(move);
+    }
+    public boolean isIpReachable(String ip, int timeout){
+        boolean state = false;
+
+        try {
+            state = InetAddress.getByName(ip).isReachable(timeout);
+        } catch (IOException e) {
+            //Parse error here
+        }
+
+        return state;
     }
 
     public static String getServerMsg() {

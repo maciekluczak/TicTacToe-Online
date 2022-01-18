@@ -65,11 +65,14 @@ public class GameField extends JLabel implements MouseListener {
                 gameBufor.setTurn(gameBufor.getTurn() + 1);
                 //System.out.println("x"+ fieldID);
 
+
             } else if (fieldMark.equals("o")) {
                 this.setIcon(circle);
                 gameBufor.setTurn(gameBufor.getTurn() + 1);
                // System.out.println("o"+ fieldID);
             }
+            this.setBackground( new Color(246, 235, 220));
+            SwingUtilities.updateComponentTreeUI(this);
         }
     }
 
@@ -81,21 +84,22 @@ public class GameField extends JLabel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
     //Field respond to mouse click. Mark under field has changed (turn-dependent char)
 
-        if(gameBufor.getTurn()%2 == 0 && gameBufor.getPlayerMark().equals("o")){
+        if(gameBufor.getTurn()%2 == 0 & gameBufor.getPlayerMark().equals("o")){
+            //Player move, send to GameBufor class
 
             setFieldMark("o");
             try {
-                gameBufor.playerMove(Integer.toString(fieldID));
+                gameBufor.playerMove(fieldMark + fieldID);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
 
 
-        } else if(gameBufor.getTurn()%2 == 1&& gameBufor.getPlayerMark().equals("x")){
+        } else if(gameBufor.getTurn()%2 == 1 & gameBufor.getPlayerMark().equals("x")){
             setFieldMark("x");
 
             try {
-                gameBufor.playerMove(Integer.toString(fieldID));
+                gameBufor.playerMove(fieldMark + fieldID);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -121,7 +125,8 @@ public class GameField extends JLabel implements MouseListener {
     public void mouseEntered(MouseEvent e) {
     //Field respond to mouse move. Color of field has changed to green (Entered)
 
-        if(this.fieldMark.equals(" ") ) {
+        if(this.fieldMark.equals(" ") & gameBufor.getTurn()%2 == 0 & gameBufor.getPlayerMark().equals("o") ||
+                this.fieldMark.equals(" ") & gameBufor.getTurn()%2 == 1 & gameBufor.getPlayerMark().equals("x")) {
             this.setBackground(Color.GREEN);
         }
         else{

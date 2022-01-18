@@ -2,6 +2,7 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -58,7 +59,7 @@ public class GameBoard extends JPanel implements Runnable{
         this.setOpaque(false);
     }
 
-    public void checkWinner(){
+    public void checkWinner() throws IOException {
     //Method shows final result of the game
 
         if (whoWin.equals("x")){
@@ -80,6 +81,7 @@ public class GameBoard extends JPanel implements Runnable{
         }
         this.removeAll();
         this.add(matchEndLabel, BorderLayout.CENTER);
+        gameBufor.endConnectServer();
 
         SwingUtilities.updateComponentTreeUI(this);     //Refresh, update component
     }
@@ -90,7 +92,7 @@ public class GameBoard extends JPanel implements Runnable{
 
         int matchBound= (boardSize*boardSize);      //Total maximum number of moves in the game (both players)
         int oneMoreLoop=1;                          //Integer for last check of the state of the game to detect a draw
-        int enemyMove = 0;
+        int enemyMove;
 
         while (!gameEnd) {
             try {
@@ -100,33 +102,23 @@ public class GameBoard extends JPanel implements Runnable{
             }
 
             if(gameBufor.getPlayerMark().equals("o") & gameBufor.getTurn()%2 == 1) {
+                if(!gameBufor.getEnemyMove().equals("-")){
 
-                enemyMove = Integer.valueOf(gameBufor.getPlayerMark());
+                    enemyMove = Integer.valueOf(gameBufor.getEnemyMove());
+                    boardField[(enemyMove-1)/3][(enemyMove-1)%3].setFieldMark("x");
+                    SwingUtilities.updateComponentTreeUI(this);}
 
-                for (int row = 0; row < 3; row++) {
-                    for (int col = 0; col < 3; col++) {
-                        if (boardField[row][col].getFieldID() == enemyMove) {
-                            boardField[row][col].setFieldMark("x");
-                        }
-                    }
-                }
 
             }
 
 
 
-
-
             else if(gameBufor.getPlayerMark().equals("x") & gameBufor.getTurn()%2 == 0){
-                for (int row = 0; row < 3; row++) {
-                    for (int col = 0; col < 3; col++) {
-                        if (boardField[row][col].getFieldID() == enemyMove) {
-                            boardField[row][col].setFieldMark("x");
-                        }
-                    }
-                }
+                if(!gameBufor.getEnemyMove().equals("-")){
 
-
+                    enemyMove = Integer.valueOf(gameBufor.getEnemyMove());
+                    boardField[(enemyMove-1)/3][(enemyMove-1)%3].setFieldMark("o");
+                    SwingUtilities.updateComponentTreeUI(this);}
 
             }
 
@@ -135,6 +127,7 @@ public class GameBoard extends JPanel implements Runnable{
 
             for (int row = 0; row < boardSize; row++) {
                 for (int col = 0; col < boardSize; col++) {
+                    SwingUtilities.updateComponentTreeUI(boardField[row][col]);
                 //For each win combination, check the mark (x,o,-) from under a single field on grid
 
                     if (boardField[2][0].getFieldMark().equals("x") &
@@ -224,5 +217,10 @@ public class GameBoard extends JPanel implements Runnable{
             }
         }
         //winner announcement
-        checkWinner();}
+        try {
+            checkWinner();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

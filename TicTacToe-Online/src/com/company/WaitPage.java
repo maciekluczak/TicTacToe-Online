@@ -7,11 +7,7 @@ public class WaitPage extends JLayeredPane {
     private WaitLabel waitLabel;
     private ExitButton exitButton;
 
-    private BackButton backButton;
 
-    public BackButton getBackButton() {
-        return backButton;
-    }
 
     public WaitPage() {
 
@@ -57,11 +53,6 @@ public class WaitPage extends JLayeredPane {
         exitButton.setAlignmentY(JLabel.BOTTOM_ALIGNMENT);
         exitButton.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         panelDown.add(exitButton);
-
-        backButton=new BackButton(100, 50);
-        backButton.setAlignmentY(JLabel.BOTTOM_ALIGNMENT);
-        backButton.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        panelUp.add(backButton);
 
 
         //Creating Match Buttons

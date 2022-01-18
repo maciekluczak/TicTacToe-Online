@@ -2,27 +2,23 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.io.IOException;
-import java.util.EventListener;
-
-public class MainScreen extends JFrame implements MouseListener, WindowListener, EventListener {
-    private static CardLayout cl;
+//Main game layout- CardLayout
+public class MainScreen extends JFrame implements MouseListener, WindowListener {
+    private static CardLayout cl;               //Pages initialization
     private static JPanel contentPanel;
     private  HomePage homePage;
     private  static GamePage gamePage;
     private WaitPage waitPage;
-    private SearchPage searchPage;
     private GameBufor gameBufor;
+    private SearchPage searchPage;
 
 
 
     private ImageIcon windowIcon;
 
-    public MainScreen() {
+    public MainScreen() {               //Set Frame
 
         // Frame Settings
         this.setTitle("TicTacToe Online");
@@ -43,18 +39,19 @@ public class MainScreen extends JFrame implements MouseListener, WindowListener,
         waitPage = new WaitPage();
         searchPage = new SearchPage();
 
+
         contentPanel.add(homePage, "1");
         contentPanel.add(gamePage,"2");
         contentPanel.add(waitPage, "3");
         contentPanel.add(searchPage, "4");
 
         //Get access to action buttons from pages
-        homePage.getSearchButton().addMouseListener(this);
-        homePage.getMatchButton().addMouseListener(this);
+        homePage.getPlayButton().addMouseListener(this);
         gamePage.getExitButton().addMouseListener(this);
         waitPage.getExitButton().addMouseListener(this);
-        waitPage.getBackButton().addMouseListener(this);
         searchPage.getBackButton().addMouseListener(this);
+        searchPage.getConnectButton().addMouseListener(this);
+
         this.addWindowListener(this);
 
 
@@ -70,22 +67,9 @@ public class MainScreen extends JFrame implements MouseListener, WindowListener,
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == homePage.getSearchButton()) {
-//            Thread gameTicTacToe = new Thread(gamePage);
-//            gameTicTacToe.start();
+
+        if (e.getSource() == homePage.getPlayButton()) {
             cl.show(contentPanel, "4");
-        }
-        else if (e.getSource() == homePage.getMatchButton()) {
-            gameBufor = new GameBufor();
-            gameBufor.connectServer();
-
-            Thread waitPageThread = new Thread(waitPage.getWaitLabel());
-            waitPageThread.start();
-
-//            Thread connectServer =new Thread(clientTCP);
-//            connectServer.start();
-
-            cl.show(contentPanel, "3");
 
         }
         if (e.getSource() == gamePage.getExitButton()) {
@@ -108,16 +92,22 @@ public class MainScreen extends JFrame implements MouseListener, WindowListener,
         if (e.getSource() == searchPage.getBackButton()) {
             cl.show(contentPanel, "1");
         }
-        //TEST BUTTON
-//        if (e.getSource() == waitPage.getBackButton()) {
-//            waitPage.getWaitLabel().setShouldWait(false);
-//            Thread gameTicTacToe = new Thread(gamePage);
-//            gameTicTacToe.start();
-//
-////            Thread connectServer =new Thread(clientTCP);
-////            connectServer.start();
-//            cl.show(contentPanel, "2");
-//        }
+        else if  (e.getSource() == searchPage.getConnectButton()) {
+            if(!(!searchPage.getIpTextField().equals("Enter Server IP") ^ !searchPage.getIpTextField().isBlank())){ //Check if is Ip valid
+
+                gameBufor = new GameBufor();
+                gameBufor.setServerIp(searchPage.getIpTextField());
+                System.out.println(gameBufor.getServerIp());
+                gameBufor.connectServer();
+
+
+                Thread waitPageThread = new Thread(waitPage.getWaitLabel());
+                waitPageThread.start();
+
+                cl.show(contentPanel, "3");
+            }
+
+        }
 
     }
 
@@ -150,7 +140,7 @@ public class MainScreen extends JFrame implements MouseListener, WindowListener,
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if (gameBufor != null){
+        if (gameBufor != null){                 // end connection when window closing (during connection with server)
             waitPage.getWaitLabel().setShouldWait(false);
             try {
                 gameBufor.endConnectServer();
@@ -187,10 +177,12 @@ public class MainScreen extends JFrame implements MouseListener, WindowListener,
     public void windowDeactivated(WindowEvent e) {
 
     }
-    public static void letsPlay(){
+    public static void letsPlay(){ // Game Thread
         Thread gameTicTacToe = new Thread(gamePage);
         gameTicTacToe.start();
         cl.show(contentPanel, "2");
 
     }
+
+
 }

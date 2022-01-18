@@ -2,12 +2,14 @@ package com.company;
 
 import java.io.IOException;
 
-public class GameBufor {
-    private static int Turn;
-    private static int isGameRun;
+public class GameBufor {                         //Main Game Support Class
+    private static int Turn;        //Info- Turn
+    private static int isGameRun;  // Info - is game still run?
     private static String playerMark; // "-", "x", "o"
-    private static ClientTCP clientTCP;
-    private static String enemyMove;
+    private static ClientTCP clientTCP; //client management
+    private static String enemyMove;    // Enemy move from server
+    private static GameField[] fieldsArray; // Array of fields class from board 3x3
+    private static String serverIp;         //string of typed ip
 
     public GameBufor() {
 
@@ -39,8 +41,24 @@ public class GameBufor {
         return playerMark;
     }
 
+    public static GameField[] getFieldsArray() {
+        return fieldsArray;
+    }
+
+    public static void setFieldsArray(GameField[] fieldsArray) {
+        GameBufor.fieldsArray = fieldsArray;
+    }
+
     public static String getEnemyMove() {
         return enemyMove;
+    }
+
+    public static String getServerIp() {
+        return serverIp;
+    }
+
+    public static void setServerIp(String serverIp) {
+        GameBufor.serverIp = serverIp;
     }
 
     public static void setEnemyMove(String enemyMove) {
