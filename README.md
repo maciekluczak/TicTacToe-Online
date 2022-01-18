@@ -39,15 +39,20 @@ Zawartość folderu TicTacToe-Online:
 • `MainScreen.java` - Klasa rozszerzająca JFrame, Inicjalizuje strukture stron całego programu za pomocą CardLayout'u
 
 • `GameBoard.java` -  Klasa implementująca "Runnable Interface", Inicjalizuje strukturę gry podczas rozgrywki budując pole gry 3x3 z pozostałych zaimplemntowanych komponentów. Zawiera system wykrywania stanów gry
+
 • `GameBuffor.java` - Klasa implementująca menadżera gry, umozliwia komunikacje pomiędzy klasą klienta a pozostałymi komponentami, monitoruje właściwa pracą programu oraz pośrodeniczy podczas zarządzania zasobami.
+
 • `GameField.java` - Klasa implementująca pojedyńcze pole na planszy (GameBoard) podczas rozgrywki. Zapomocą MouseListenera, przechwytuje sygnały gracza i wczasie rzeczywistym implementuje sygnały na responsywnym GUI gry.
+
 ...
 Pozostałe klasy implementują strony bądź podstrony, pełnią funkcję wspomagającą pracę GUI bądź są rozbudowane o animacje, grafikę wyłącznie w celach estetycznych (nie mają wpływu na komunikację sieciową gry).
 
 Serwer został napisany i testowany za pomoca VirtualBox'a na systemie Ubuntu 20.04 gdzie pomyślnie przeszedł wszelkie testy związane z połączeniem serwera z klientem systemu Windows10.
 
 Kompilacja serwera: `g++ ServerTCP.cpp -o server -lpthread`
+
 Uruchomienie serwera: `./server`
+
 Uruchomienie Klienta: `Plik Main.java`
 
 DODATKOWE ZAŁOŻENIE: `uruchamianie GUI powinno się odbyć przez wczytanie projektu o ścieżce "\TicTacToe-Online\src\com\company\..." wcelu poprawnym załadowaniu grafik do GUI`
