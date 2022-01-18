@@ -24,13 +24,20 @@ Interface gry (GUI), klient TCP oraz mechanizm rozpoznawania stanów gry, zosta�
     ## Klient:
     Po wprowadzeniu w interfejsie gry informacji o adresie serwera, wpisany adres jest poddany weryfikacji oraz sprawdzeniu czy istnieje z nim połączenie, kiedy system uzna połączenie za bezpieczne  następuje powiązanie sygnału z serwerem oraz wysłanie wiadomości przez klienta o gotowości do gry oczekując na przeciwnika. 
 
-3. Opis wybranej zawartości projektu.\n
-• `ServerTCP.cpp` - implementacja serwera w języku c++\n
+3. Opis wybranej zawartości projektu.
+
+• `ServerTCP.cpp` - implementacja serwera w języku c+
+
 Zawartość folderu TicTacToe-Online:
+
 • image - folder zawierający graficzne uzupełnienie interejsu gry
+
 • `ClientTCP.java` - Klasa implementująca model klienta
+
 • `HomePage.java` - Klasa strony startowej gry
+
 • `MainScreen.java` - Klasa rozszerzająca JFrame, Inicjalizuje strukture stron całego programu za pomocą CardLayout'u
+
 • `GameBoard.java` -  Klasa implementująca "Runnable Interface", Inicjalizuje strukturę gry podczas rozgrywki budując pole gry 3x3 z pozostałych zaimplemntowanych komponentów. Zawiera system wykrywania stanów gry
 • `GameBuffor.java` - Klasa implementująca menadżera gry, umozliwia komunikacje pomiędzy klasą klienta a pozostałymi komponentami, monitoruje właściwa pracą programu oraz pośrodeniczy podczas zarządzania zasobami.
 • `GameField.java` - Klasa implementująca pojedyńcze pole na planszy (GameBoard) podczas rozgrywki. Zapomocą MouseListenera, przechwytuje sygnały gracza i wczasie rzeczywistym implementuje sygnały na responsywnym GUI gry.
